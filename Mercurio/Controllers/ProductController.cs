@@ -36,6 +36,7 @@ namespace Mercurio.Controllers
 
 
         [HttpPost]
+        [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(ProductCreateDTO productCreateDTO)
         {
             if (ModelState.IsValid)
@@ -48,6 +49,7 @@ namespace Mercurio.Controllers
         }
 
         [HttpPut]
+        [RequestSizeLimit(500_000)]
         public async Task <IActionResult>  Update(ProductUpdateDTO productUpdateDTO)
         {
             if (ModelState.IsValid)

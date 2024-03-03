@@ -9,7 +9,6 @@ namespace Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(s => s.Title).HasMaxLength(500);
-            builder.Property(s => s.Code).HasMaxLength(100);
             builder.HasMany(p => p.Products)
                       .WithOne(p => p.Category)
                       .HasForeignKey(p => p.CategoryId)
