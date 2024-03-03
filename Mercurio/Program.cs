@@ -4,8 +4,13 @@ using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.DbContexts;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,14 +39,15 @@ builder.Services.AddTransient<IServiceService, ServiceService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-//{
-//    builder.AllowAnyOrigin()
-//           .AllowAnyMethod()
-//           .AllowAnyHeader();
-//}));
+
+
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+
+
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 /*if (app.Environment.IsDevelopment())

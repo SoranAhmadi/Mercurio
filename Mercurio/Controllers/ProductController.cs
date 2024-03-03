@@ -1,5 +1,7 @@
 using Application.DTOs.Product;
 using Application.IServices;
+
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -9,6 +11,7 @@ namespace Mercurio.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productRepository;
+     
         public ProductController(IProductService productRepository)
         {
             _productRepository = productRepository;
@@ -18,14 +21,14 @@ namespace Mercurio.Controllers
         public async Task<IEnumerable<ProductDTO>> GetAll(ProductFilterDTO? filter) => await _productRepository.GetAll(filter);
 
         [HttpPost]
-        public async Task< ActionResult<IEnumerable<ProductSearchViewDTO>>>SearchProductTerm(ProductSearchDTO? filter)
+        public async Task<ActionResult<IEnumerable<ProductSearchViewDTO>>> SearchProductTerm(ProductSearchDTO? filter)
         {
-            var result =  await _productRepository.SearchProductTerm(filter);
+            var result = await _productRepository.SearchProductTerm(filter);
 
-            if(result  == null || !result.Any())
+            if (result == null || !result.Any())
                 return NotFound();
             return Ok(result);
-        } 
+        }
 
 
         [HttpPost]
@@ -33,16 +36,35 @@ namespace Mercurio.Controllers
 
 
         [HttpPost]
-        public async Task<int> Create(ProductCreateDTO productCreateDTO) => await _productRepository.Create(productCreateDTO);
+        public async Task<IActionResult> Create(ProductCreateDTO productCreateDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                   var result =  await _productRepository.Create(productCreateDTO);
+              return Ok(result);
+            }
+            return BadRequest(ModelState);
+        }
 
         [HttpPut]
-        public async Task Update(ProductUpdateDTO productUpdateDTO) => await _productRepository.Update(productUpdateDTO);
+        public async Task <IActionResult>  Update(ProductUpdateDTO productUpdateDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                await _productRepository.Update(productUpdateDTO);
+                return Ok();
+            }
+            else
+                return BadRequest(ModelState);
+            
+        }
 
         [HttpDelete]
         public async Task Delete(ProductDeleteDTO productDeleteDTO) => await _productRepository.Delete(productDeleteDTO);
 
         [HttpPost]
-        public IActionResult Test() 
+        public IActionResult Test()
         {
             return Ok(true);
         }
