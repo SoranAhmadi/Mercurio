@@ -12,14 +12,26 @@ namespace Mercurio.Controllers
         private readonly IServiceService _serviceService;
         public ServiceController(IServiceService serviceService)
         {
-            _serviceService= serviceService;
+            _serviceService = serviceService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ServiceDTO>> GetAll()=>await _serviceService.GetAll();
+        public async Task<IEnumerable<ServiceDTO>> GetAll() => await _serviceService.GetAll();
 
         [HttpPost]
-        public async Task<int> Create(ServiceCreateDTO serviceCreateDTO) => await _serviceService.Create(serviceCreateDTO);
+        [RequestSizeLimit(500_000)]
+        public async Task<IActionResult> Create(ServiceCreateDTO serviceCreateDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _serviceService.Create(serviceCreateDTO);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
 
         [HttpPost]
         public async Task<ServiceUpdateDTO> GetById(ServiceByIdDTO serviceUpdateDTO) => await _serviceService.GetById(serviceUpdateDTO.Id);
@@ -27,9 +39,21 @@ namespace Mercurio.Controllers
 
         [HttpDelete]
         public async Task Delete(ServiceDeleteDTO serviceDeleteDTO) => await _serviceService.Delete(serviceDeleteDTO);
-        
+
         [HttpPut]
-        public async Task Update(ServiceDeleteDTO serviceDeleteDTO) => await _serviceService.Delete(serviceDeleteDTO);
+        [RequestSizeLimit(500_000)]
+        public async Task<IActionResult> Update(ServiceDeleteDTO serviceDeleteDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceService.Delete(serviceDeleteDTO);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
 
 
 
