@@ -18,7 +18,8 @@ namespace Infrastructure.DbContexts
             modelBuilder.ApplyConfiguration(new ServiceConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceItemConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+
         }
 
     }
