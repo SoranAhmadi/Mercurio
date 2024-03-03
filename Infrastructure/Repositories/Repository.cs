@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
             return entities.AsNoTracking().AsQueryable();
         }
 
-        public IQueryable<T> GetAllQueryAble() => entities.AsNoTracking().AsSplitQuery().AsQueryable();
+        public IQueryable<T> GetAllQueryAble() => entities.AsNoTracking().AsQueryable();
 
         public async Task<T?> Get(int id)
         {

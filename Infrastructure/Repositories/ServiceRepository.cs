@@ -20,6 +20,10 @@ namespace Infrastructure.Repositories
             return context.Set<Service>().Include(s => s.ServiceItems).AsSingleQuery().AsNoTracking();
         }
 
+        public new IQueryable<Service> GetAllQueryAble()
+            => context.Set<Service>().Include(s => s.ServiceItems).AsSplitQuery().AsNoTracking();
+        
+
         public async new Task Delete(int id)
         {
             var services = await context.Set<ServiceItem>().Where(s => s.ServiceId == id).ToListAsync();
