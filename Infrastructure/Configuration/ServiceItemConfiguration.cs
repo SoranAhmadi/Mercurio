@@ -10,9 +10,7 @@ namespace Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ServiceItem> builder)
         {
-            builder.Property(s => s.Title).HasMaxLength(500);
-            
-    
+            builder.Property(s => s.Title).HasMaxLength(500);    
         }
     }
 }
