@@ -17,6 +17,10 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<IEnumerable<CategoryDTO>> GetAll()=>await _categoryRepository.GetAll();
 
+        [HttpGet]
+        public async Task<IEnumerable<CategoryWithImageDTO>> GetAllWithImage() => await _categoryRepository.GetAllWithImage();
+
+
         [HttpPost]
         public async Task<CategoryUpdateDTO> GetById(CategoryDeleteDTO categoryDeleteDTO) => await _categoryRepository.GetById(categoryDeleteDTO.Id);
 

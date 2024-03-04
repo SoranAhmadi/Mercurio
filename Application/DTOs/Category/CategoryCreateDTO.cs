@@ -6,7 +6,7 @@ namespace Application.DTOs.Category
     {
         [MaxLength(500, ErrorMessage = "عنوان اجباری است و حداکثر طول آن 500 کارکتر است")]
         public required string Title { get; set; }
-        public string? Description { get; set; }
+        public  string? ImageBase64 { get; set; }
 
     }
 }

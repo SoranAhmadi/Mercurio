@@ -20,6 +20,9 @@ namespace Application.Services
         public async Task<IEnumerable<CategoryDTO>> GetAll()
             =>await _categoryRepsitory.GetAllQueryAble().ProjectTo<CategoryDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
+        public async Task<IEnumerable<CategoryWithImageDTO>> GetAllWithImage()
+           => await _categoryRepsitory.GetAllQueryAble().ProjectTo<CategoryWithImageDTO>(_mapper.ConfigurationProvider).ToListAsync();
+
         public async Task<int> Create(CategoryCreateDTO categoryCreateDTO)
         {
             return await _categoryRepsitory.Insert(_mapper.Map<Category>(categoryCreateDTO));
