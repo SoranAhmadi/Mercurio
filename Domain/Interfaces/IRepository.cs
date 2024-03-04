@@ -12,6 +12,7 @@ namespace Domain.Interfaces
         Task Update(T entity);
         void Delete(T entity);
         Task DeleteById(int id);
+        Task RemoveRange(IEnumerable<T> list);
 
     }
 }

@@ -1,16 +1,10 @@
 using Application.IServices;
 using Application.Services;
-
 using Domain.Interfaces;
+using FluentValidation;
 using Infrastructure.DbContexts;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +29,10 @@ builder.Services.AddTransient<IProductService, ProductService>();
 
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IServiceService, ServiceService>();
+
+builder.Services.AddTransient<IContactUsRepository, ContactUsRepository>();
+builder.Services.AddTransient<IContactUsService, ContactUsService>();
+
 
 
 builder.Services.AddEndpointsApiExplorer();

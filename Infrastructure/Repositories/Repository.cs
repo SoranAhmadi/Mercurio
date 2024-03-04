@@ -64,5 +64,10 @@ namespace Infrastructure.Repositories
             entities.Remove(entity);
             await context.SaveChangesAsync();
         }
+        public async Task RemoveRange(IEnumerable<T> list)
+        {
+            entities.RemoveRange(list);
+            await context.SaveChangesAsync();
+        }
     }
 }

@@ -29,6 +29,5 @@ namespace Mercurio.Controllers
         [HttpDelete]
         public async Task Delete(CategoryDeleteDTO categoryDeleteDTO) => await _categoryRepository.Delete(categoryDeleteDTO);
 
-
     }
 }

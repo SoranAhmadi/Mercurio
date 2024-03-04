@@ -20,6 +20,7 @@ namespace Infrastructure.DbContexts
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ContactCommentConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactUsConfiguration());
 
         }
 
