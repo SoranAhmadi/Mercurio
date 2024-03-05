@@ -23,5 +23,8 @@ namespace Application.DTOs.Service
         [MaxLength(500)]
         public string? ExtraDescription { get; set; }
         public List<ServiceItemUpdateDTO> ServiceUpdateItems { get; set; }
+
+        [MaxLength(2000, ErrorMessage = " توضیحات اجباری است و حداکثر طول آن 2000 است")]
+        public required string Description { get; set; }
     }
 }

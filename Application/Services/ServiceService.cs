@@ -31,6 +31,7 @@ namespace Application.Services
                 Title1 = serviceCreateDTO.Title1,
                 Title2 = serviceCreateDTO.Title2,
                 ImageBase64 = serviceCreateDTO.ImageBase64,
+                Description = serviceCreateDTO.Description,
                 ExtraDescription = string.IsNullOrEmpty(serviceCreateDTO.ExtraDescription) ? null : serviceCreateDTO.ExtraDescription,
                 ExtraTitle = string.IsNullOrEmpty(serviceCreateDTO.ExtraTitle) ? null : serviceCreateDTO.ExtraTitle,
                 ServiceItems = serviceCreateDTO.ServiceItems.Select(s => new ServiceItem() { Title = s }).ToList()

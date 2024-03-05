@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Service:Entity
     {
@@ -18,6 +16,7 @@ namespace Domain.Entities
         public string? ExtraDescription { get; set; }
 
         public required string ImageBase64 { get; set; }
+        public required string Description { get; set; }
         public virtual ICollection<ServiceItem> ServiceItems { get; set; }       
     }
 }

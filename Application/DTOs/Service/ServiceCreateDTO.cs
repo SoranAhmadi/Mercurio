@@ -21,5 +21,8 @@ namespace Application.DTOs.Service
         [MaxLength(500, ErrorMessage = "توضیحات اضافی اختیاری است و حداکثر طول آن 500 کارکتر است")]
         public string? ExtraDescription { get; set; }
 
+        [MaxLength(2000, ErrorMessage = " توضیحات اجباری است و حداکثر طول آن 2000 است")]
+        public required string Description { get; set; }
+
     }
 }

@@ -14,5 +14,7 @@
         public string? ExtraTitle { get; set; }
         
         public string? ExtraDescription { get; set; }
+
+        
     }
 }
