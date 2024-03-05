@@ -14,6 +14,7 @@ namespace Infrastructure.Configuration
             builder.Property(s=>s.Title2).HasMaxLength(500);
             builder.Property(s=>s.ExtraTitle).HasMaxLength(500);
             builder.Property(s => s.ExtraDescription).HasMaxLength(500);
+            builder.Property(s => s.Description).HasMaxLength(2000);
             builder.HasMany(p => p.ServiceItems)
                   .WithOne(p => p.Service)
                   .HasForeignKey(p => p.ServiceId)
