@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
-using Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Infrastructure.DbContexts
 {
@@ -15,13 +15,7 @@ namespace Infrastructure.DbContexts
         public DbSet<ServiceItem> ServiceItem { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ServiceConfiguration());
-            modelBuilder.ApplyConfiguration(new ServiceItemConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ContactCommentConfiguration());
-            modelBuilder.ApplyConfiguration(new ContactUsConfiguration());
-
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
     }
