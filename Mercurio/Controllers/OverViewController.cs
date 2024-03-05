@@ -1,7 +1,4 @@
-using Application.DTOs.Category;
-using Application.DTOs.ContactUs;
 using Application.DTOs.OVerViews;
-using Application.DTOs.Service;
 using Application.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +18,7 @@ namespace Mercurio.Controllers
         public async Task<OverViewDTO> Get() => await _overViewService.Get();
 
         [HttpPost]
+        [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(OverViewCreateDTO overViewCreateDTO)
         {
             if (ModelState.IsValid)
@@ -36,6 +34,7 @@ namespace Mercurio.Controllers
 
         
         [HttpPut]
+        [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Update(OverViewUpdateDTO overViewUpdateDTO)
         {
             if (ModelState.IsValid)

@@ -4,5 +4,6 @@ namespace Domain.Interfaces
 {
     public interface IOverViewRepository : IRepository<OverView>
     {
+        new Task Update(OverView overView);
     }
 }
