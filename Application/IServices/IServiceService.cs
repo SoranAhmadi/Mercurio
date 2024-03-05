@@ -11,7 +11,5 @@ namespace Application.IServices
         Task<ServiceUpdateDTO> GetById(int id);
         Task Update(ServiceUpdateDTO serviceUpdateDTO);
 
-
-
     }
 }
