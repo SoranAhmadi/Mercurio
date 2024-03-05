@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
 
         public async new Task Update(Category entity)
         {
-            var oldCategory = await context.Set<Category>().FirstOrDefaultAsync();
+            var oldCategory = await context.Set<Category>().AsNoTracking().FirstOrDefaultAsync();
             if (string.IsNullOrEmpty(entity.ImageBase64))
             {
                 entity.ImageBase64 = oldCategory.ImageBase64;

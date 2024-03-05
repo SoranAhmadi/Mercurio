@@ -33,6 +33,9 @@ builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IContactUsRepository, ContactUsRepository>();
 builder.Services.AddTransient<IContactUsService, ContactUsService>();
 
+builder.Services.AddTransient<IWhyUsRepository, WhyUsRepository>();
+builder.Services.AddTransient<IWhyUsService, WhyUsService>();
+
 
 
 builder.Services.AddEndpointsApiExplorer();
