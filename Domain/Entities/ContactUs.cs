@@ -8,8 +8,8 @@
         public string? WhatsApp { get; set; }
         public required string Address { get; set; }
         public required string Email { get; set; }
-        public  float Lan { get; set; }
-        public float Lat { get; set; }
+        public double Lan { get; set; }
+        public double Lat { get; set; }
 
     }
 }

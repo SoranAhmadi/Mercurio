@@ -9,8 +9,8 @@
         public string? WhatsApp { get; set; }
         public required string Address { get; set; }
         public required string Email { get; set; }
-        public float Lan { get; set; }
-        public float Lat { get; set; }
+        public decimal Lan { get; set; }
+        public decimal Lat { get; set; }
 
     }
 }
