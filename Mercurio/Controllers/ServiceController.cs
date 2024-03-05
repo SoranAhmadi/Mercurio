@@ -18,6 +18,10 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<IEnumerable<ServiceDTO>> GetAll() => await _serviceService.GetAll();
 
+        [HttpGet]
+        public async Task<IEnumerable<ServiceSummaryDTO>> GetAllSummary() => await _serviceService.GetAllSummary();
+
+
         [HttpPost]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(ServiceCreateDTO serviceCreateDTO)

@@ -5,7 +5,6 @@ using AutoMapper.QueryableExtensions;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 namespace Application.Services
 {
 
@@ -21,6 +20,9 @@ namespace Application.Services
 
         public async Task<IEnumerable<ServiceDTO>> GetAll()
         => await _serviceRepsitory.GetAllQueryAble().ProjectTo<ServiceDTO>(_mapper.ConfigurationProvider).ToListAsync();
+
+        public async Task<IEnumerable<ServiceSummaryDTO>> GetAllSummary()
+        => await _serviceRepsitory.GetAllQueryAble().ProjectTo<ServiceSummaryDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
         public async Task<int> Create(ServiceCreateDTO serviceCreateDTO)
         {

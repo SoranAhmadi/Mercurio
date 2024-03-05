@@ -10,6 +10,7 @@ namespace Application.AutoMappers.Services
         {
             Read();
             Update();
+            ReadSumamry();
         }
         private void Read()
         {
@@ -26,5 +27,11 @@ namespace Application.AutoMappers.Services
                     Id  = s.Id,
                 }).ToList())); ;
         }
+        private void ReadSumamry()
+        {
+            CreateMap<Service, ServiceSummaryDTO>();
+            
+        }
+
     }
 }
