@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.AboutUsSections;
+using Application.DTOs.ContactComment;
 using Application.IServices;
 using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -32,5 +34,23 @@ namespace Application.Services
             return listSections;
         }
 
+        public async Task<int> Create(AboutUsSectionCreateDTO aboutUsSectionCreate)
+        {
+            return await _aboutUsSectionRepository.Insert(_mapper.Map<AboutUsSection>(aboutUsSectionCreate));
+        }
+        public async Task<AboutUsSectionUpdateDTO> GetById(int id)
+        {
+            var aboutUsSection = await _aboutUsSectionRepository.Get(id);
+            return _mapper.Map<AboutUsSectionUpdateDTO>(aboutUsSection);
+
+        }
+        public async Task Update(AboutUsSectionUpdateDTO aboutUsSectionUpdate)
+        {
+           var aboutSection =  _mapper.Map<AboutUsSection>(aboutUsSectionUpdate);
+           await _aboutUsSectionRepository.Update(aboutSection);
+        }
+        public async Task Delete(AboutUsSectionDeleteDTO aboutUsSectionDelete)
+       =>await _aboutUsSectionRepository.DeleteById(aboutUsSectionDelete.Id);
+        
     }
 }
