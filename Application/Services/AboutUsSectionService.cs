@@ -20,22 +20,18 @@ namespace Application.Services
             _aboutUsSectionRepository = aboutUsSectionRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<AboutUsSectionRowDTO>> GetAll()
+        public async Task<OurCompanyDTO> GetOurCompany()
         {
-            var allAboutUs = await _aboutUsSectionRepository.GetAll();
-            List<int> list = allAboutUs.Select(p => p.Row).OrderBy(a => a).Distinct().ToList();
-            List<AboutUsSectionRowDTO> listSections = new List<AboutUsSectionRowDTO>();
-            for (var index = 0; index < list.Count(); index++)
-            {
-                var itemCurrentRow = allAboutUs.Where(a => a.Row == list[index]).ToList();
-                listSections.Add(new AboutUsSectionRowDTO()
-                {
-                    Row = list[index],
-                    AboutUsSectionItemDTOs = itemCurrentRow.OrderBy(i => i.Priority).AsQueryable().ProjectTo<AboutUsSectionItemDTO>(_mapper.ConfigurationProvider).ToList(),
-                });
-            }
-            return listSections;
+            var aboutSections = await _aboutUsSectionRepository.GetAllQueryAble().Where(c=>c.Type == AboutUsType.OurCompany).ProjectTo<OurCompanyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return aboutSections.FirstOrDefault();
+
         }
+        public async Task<AboutUsOnlyDTO> GetAboutUs()
+        {
+            var aboutSections = await _aboutUsSectionRepository.GetAllQueryAble().Where(c => c.Type == AboutUsType.AboutUs).ProjectTo<AboutUsOnlyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return aboutSections.FirstOrDefault();
+        }
+
         public async Task<IEnumerable<AboutUsDetailDTO>> GetAllWithDetail()
         {
             var aboutSections = await _aboutUsSectionRepository.GetAllQueryAble().ProjectTo<AboutUsDetailDTO>(_mapper.ConfigurationProvider).ToListAsync();

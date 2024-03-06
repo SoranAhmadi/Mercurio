@@ -4,7 +4,8 @@ namespace Application.IServices
 {
     public interface IAboutUsSectionService
     {
-        Task<IEnumerable<AboutUsSectionRowDTO>> GetAll();
+        Task<OurCompanyDTO> GetOurCompany();
+        Task<AboutUsOnlyDTO> GetAboutUs();
         Task<IEnumerable<AboutUsDetailDTO>> GetAllWithDetail();
         Task<int> Create(AboutUsSectionCreateDTO aboutUsSectionCreate);
         Task<AboutUsSectionUpdateDTO> GetById(int id);

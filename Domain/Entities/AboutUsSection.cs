@@ -4,11 +4,10 @@ namespace Domain.Entities
 {
     public class AboutUsSection:Entity
     {
-        public int Row { get; set; }
         public AboutUsType Type { get; set; }
-        public int Priority { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? Description2 { get; set; }
+        public string? Description3 { get; set; }
     }
 }
