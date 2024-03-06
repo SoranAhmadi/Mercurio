@@ -13,9 +13,9 @@ namespace Infrastructure.Repositories
         public new async Task Update(OverView overView)
         {
             var oldOverView =await context.Set<OverView>().AsNoTracking().FirstOrDefaultAsync(ov=>ov.Id == overView.Id);
-            if (string.IsNullOrEmpty(overView.Image))
+            if (string.IsNullOrEmpty(overView.ImageBase64))
             {
-                overView.Image = oldOverView.Image;
+                overView.ImageBase64 = oldOverView.ImageBase64;
             }
             await base.Update(overView);
         }

@@ -19,6 +19,8 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<AboutUsOnlyDTO> GetAboutUs() => await _aboutUsSectionService.GetAboutUs();
         [HttpGet]
+        public async Task<IEnumerable< AboutUsDetailDTO>> GetAllWithDetail() => await _aboutUsSectionService.GetAllWithDetail();
+        [HttpGet]
         public async Task<OurCompanyDTO> GetOurCompany() => await _aboutUsSectionService.GetOurCompany();
 
 
