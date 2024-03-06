@@ -11,7 +11,7 @@ namespace Application.AutoMappers.AboutUsSections
             Create();
             Update();
             Items();
-
+            AboutUsDetail();
         }
 
         private void Create()
@@ -25,6 +25,11 @@ namespace Application.AutoMappers.AboutUsSections
         private void Items()
         {
             CreateMap< AboutUsSection, AboutUsSectionItemDTO>();
+        }
+        private void AboutUsDetail()
+        {
+            CreateMap<AboutUsSection, AboutUsDetailDTO>();
+            
         }
         
     }

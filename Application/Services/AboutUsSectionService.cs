@@ -6,15 +6,16 @@ using AutoMapper.QueryableExtensions;
 using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
-    public class AboutUsSectionService: IAboutUsSectionService
+    public class AboutUsSectionService : IAboutUsSectionService
     {
         private readonly IAboutUsSectionRepository _aboutUsSectionRepository;
         private readonly IMapper _mapper;
 
-        public AboutUsSectionService(IMapper mapper , IAboutUsSectionRepository aboutUsSectionRepository)
+        public AboutUsSectionService(IMapper mapper, IAboutUsSectionRepository aboutUsSectionRepository)
         {
             _aboutUsSectionRepository = aboutUsSectionRepository;
             _mapper = mapper;
@@ -22,18 +23,23 @@ namespace Application.Services
         public async Task<IEnumerable<AboutUsSectionRowDTO>> GetAll()
         {
             var allAboutUs = await _aboutUsSectionRepository.GetAll();
-            List<int> list = allAboutUs.Select(p=>p.Row).OrderBy(a=>a).Distinct().ToList();
+            List<int> list = allAboutUs.Select(p => p.Row).OrderBy(a => a).Distinct().ToList();
             List<AboutUsSectionRowDTO> listSections = new List<AboutUsSectionRowDTO>();
-            for(var index = 0; index <list.Count(); index ++)
+            for (var index = 0; index < list.Count(); index++)
             {
-                var itemCurrentRow = allAboutUs.Where(a=>a.Row == list[index]).ToList();
+                var itemCurrentRow = allAboutUs.Where(a => a.Row == list[index]).ToList();
                 listSections.Add(new AboutUsSectionRowDTO()
                 {
                     Row = list[index],
-                    AboutUsSectionItemDTOs = itemCurrentRow.OrderBy(i=>i.Priority).AsQueryable().ProjectTo<AboutUsSectionItemDTO>(_mapper.ConfigurationProvider).ToList(),
+                    AboutUsSectionItemDTOs = itemCurrentRow.OrderBy(i => i.Priority).AsQueryable().ProjectTo<AboutUsSectionItemDTO>(_mapper.ConfigurationProvider).ToList(),
                 });
             }
             return listSections;
+        }
+        public async Task<IEnumerable<AboutUsDetailDTO>> GetAllWithDetail()
+        {
+            var aboutSections = await _aboutUsSectionRepository.GetAllQueryAble().ProjectTo<AboutUsDetailDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return aboutSections;
         }
 
         public async Task<int> Create(AboutUsSectionCreateDTO aboutUsSectionCreate)
@@ -48,11 +54,11 @@ namespace Application.Services
         }
         public async Task Update(AboutUsSectionUpdateDTO aboutUsSectionUpdate)
         {
-           var aboutSection =  _mapper.Map<AboutUsSection>(aboutUsSectionUpdate);
-           await _aboutUsSectionRepository.Update(aboutSection);
+            var aboutSection = _mapper.Map<AboutUsSection>(aboutUsSectionUpdate);
+            await _aboutUsSectionRepository.Update(aboutSection);
         }
         public async Task Delete(AboutUsSectionDeleteDTO aboutUsSectionDelete)
-       =>await _aboutUsSectionRepository.DeleteById(aboutUsSectionDelete.Id);
-        
+       => await _aboutUsSectionRepository.DeleteById(aboutUsSectionDelete.Id);
+
     }
 }
