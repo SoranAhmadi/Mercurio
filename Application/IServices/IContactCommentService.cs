@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.ContactComment;
-using Application.DTOs.Service;
 
 namespace Application.IServices
 {

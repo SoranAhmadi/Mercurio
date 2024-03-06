@@ -1,7 +1,8 @@
-﻿namespace Domain.Entities
+﻿namespace Application.DTOs.AboutUsSections
 {
-    public class AboutUsSection:Entity
+    public class AboutUsSectionCreateDTO
     {
+        public int Id { get; set; }
         public int Row { get; set; }
         public int Priority { get; set; }
         public string? Title { get; set; }
