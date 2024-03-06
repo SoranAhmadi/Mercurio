@@ -10,6 +10,7 @@ namespace Application.AutoMappers.AboutUsSections
         {
             Create();
             Update();
+            Items();
 
         }
 
@@ -20,6 +21,10 @@ namespace Application.AutoMappers.AboutUsSections
         private void Update()
         {
             CreateMap<AboutUsSectionUpdateDTO, AboutUsSection>().ReverseMap();
+        }
+        private void Items()
+        {
+            CreateMap< AboutUsSection, AboutUsSectionItemDTO>();
         }
         
     }

@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.AboutUsSections;
-using Application.DTOs.Category;
 
 namespace Application.IServices
 {

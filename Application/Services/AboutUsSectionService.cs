@@ -2,6 +2,8 @@
 using Application.DTOs.ContactComment;
 using Application.IServices;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -20,7 +22,7 @@ namespace Application.Services
         public async Task<IEnumerable<AboutUsSectionRowDTO>> GetAll()
         {
             var allAboutUs = await _aboutUsSectionRepository.GetAll();
-            List<int> list = allAboutUs.Select(p=>p.Row).OrderByDescending(a=>a).ToList();
+            List<int> list = allAboutUs.Select(p=>p.Row).OrderBy(a=>a).Distinct().ToList();
             List<AboutUsSectionRowDTO> listSections = new List<AboutUsSectionRowDTO>();
             for(var index = 0; index <list.Count(); index ++)
             {
@@ -28,7 +30,7 @@ namespace Application.Services
                 listSections.Add(new AboutUsSectionRowDTO()
                 {
                     Row = list[index],
-                    AboutUsSectionItemDTOs = _mapper.Map<List<AboutUsSectionItemDTO>>(itemCurrentRow)
+                    AboutUsSectionItemDTOs = itemCurrentRow.OrderBy(i=>i.Priority).AsQueryable().ProjectTo<AboutUsSectionItemDTO>(_mapper.ConfigurationProvider).ToList(),
                 });
             }
             return listSections;

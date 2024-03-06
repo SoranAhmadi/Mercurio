@@ -39,6 +39,9 @@ builder.Services.AddTransient<IWhyUsService, WhyUsService>();
 builder.Services.AddTransient<IOverViewRepository, OverViewRepository>();
 builder.Services.AddTransient<IOverViewService, OverViewService>();
 
+builder.Services.AddTransient<IAboutUsSectionRepository, AboutUsSectionRepository>();
+builder.Services.AddTransient<IAboutUsSectionService, AboutUsSectionService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
