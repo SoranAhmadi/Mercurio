@@ -3,6 +3,7 @@ using Application.DTOs.ContactComment;
 using Application.DTOs.Users;
 using Application.IServices;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace Mercurio.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(UserCreateDTO userCreateDTO)
         {

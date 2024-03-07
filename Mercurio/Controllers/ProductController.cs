@@ -2,6 +2,7 @@ using Application.DTOs.Product;
 using Application.IServices;
 
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -30,11 +31,11 @@ namespace Mercurio.Controllers
             return Ok(result);
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ProductUpdateDTO> GetById(ProductDeleteDTO filter) => await _productRepository.GetById(filter.Id);
 
-
+        [Authorize]
         [HttpPost]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(ProductCreateDTO productCreateDTO)
@@ -47,7 +48,7 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        [Authorize]
         [HttpPut]
         [RequestSizeLimit(500_000)]
         public async Task <IActionResult>  Update(ProductUpdateDTO productUpdateDTO)
@@ -61,7 +62,7 @@ namespace Mercurio.Controllers
                 return BadRequest(ModelState);
             
         }
-
+        [Authorize]
         [HttpDelete]
         public async Task Delete(ProductDeleteDTO productDeleteDTO) => await _productRepository.Delete(productDeleteDTO);
 

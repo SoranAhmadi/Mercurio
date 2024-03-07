@@ -35,7 +35,7 @@ namespace Mercurio.Controllers
             }
         }
 
-        
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(ContactUsUpdateDTO contactUsUpdateDTO)
         {

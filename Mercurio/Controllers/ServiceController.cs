@@ -1,6 +1,7 @@
 using Application.DTOs.Category;
 using Application.DTOs.Service;
 using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -21,7 +22,7 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<IEnumerable<ServiceSummaryDTO>> GetAllSummary() => await _serviceService.GetAllSummary();
 
-
+        [Authorize]
         [HttpPost]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(ServiceCreateDTO serviceCreateDTO)
@@ -36,14 +37,15 @@ namespace Mercurio.Controllers
                 return BadRequest(ModelState);
             }
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<ServiceUpdateDTO> GetById(ServiceByIdDTO serviceUpdateDTO) => await _serviceService.GetById(serviceUpdateDTO.Id);
 
-
+        [Authorize]
         [HttpDelete]
         public async Task Delete(ServiceDeleteDTO serviceDeleteDTO) => await _serviceService.Delete(serviceDeleteDTO);
-
+        
+        [Authorize]
         [HttpPut]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Update(ServiceDeleteDTO serviceDeleteDTO)

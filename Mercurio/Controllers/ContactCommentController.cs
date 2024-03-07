@@ -1,6 +1,7 @@
 using Application.DTOs.Category;
 using Application.DTOs.ContactComment;
 using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -17,10 +18,10 @@ namespace Mercurio.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<ContactCommentDTO>> GetAll() => await _contactCommentService.GetAll();
-
+        [Authorize]
         [HttpPost]
         public async Task<ContactCommentUpdateDTO> GetById(CategoryDeleteDTO categoryDeleteDTO) => await _contactCommentService.GetById(categoryDeleteDTO.Id);
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ContactCommentCreateDTO contactCommentCreateDTO)
         {
@@ -31,7 +32,7 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(ContactCommentUpdateDTO contactCommentUpdateDTO)
         {
@@ -41,7 +42,7 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        [Authorize]
         [HttpDelete]
         public async Task Delete(ContactCommentDeleteDTO contactCommentDeleteDTO) => await _contactCommentService.Delete(contactCommentDeleteDTO);
 

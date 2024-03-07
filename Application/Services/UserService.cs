@@ -7,6 +7,7 @@ using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
@@ -55,7 +56,7 @@ namespace Application.Services
             var userClaims = new[]
             {
                 
-                new Claim("FullName", user.FirstName + " " + user.LastName),
+                new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
                 
             };

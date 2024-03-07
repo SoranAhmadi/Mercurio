@@ -17,14 +17,15 @@ namespace Mercurio.Controllers
             _whyUsService = whyUsService;
         }
 
-        [Authorize]
+        
         [HttpGet]
         public async Task<IEnumerable<WhyUsDTO>> GetAll() => await _whyUsService.GetAll();
 
-        
+        [Authorize]
         [HttpPost]
         public async Task<WhyUsUpdateDTO> GetById(WhyUsByIdDTO whyUsByIdDTO) => await _whyUsService.GetById(whyUsByIdDTO);
-
+        
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(WhyUsCreateDTO whyUsCreateDTO)
         {
@@ -36,6 +37,7 @@ namespace Mercurio.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(WhyUsUpdateDTO whyUsUpdateDTO)
         {
@@ -45,7 +47,8 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        
+        [Authorize]
         [HttpDelete]
         public async Task Delete(WhyUsDeleteDTO whyUsDeleteDTO) => await _whyUsService.Delete(whyUsDeleteDTO);
 

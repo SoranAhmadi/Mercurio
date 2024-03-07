@@ -1,5 +1,6 @@
 using Application.DTOs.OVerViews;
 using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -17,6 +18,7 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<OverViewDTO> Get() => await _overViewService.Get();
 
+        [Authorize]
         [HttpPost]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(OverViewCreateDTO overViewCreateDTO)
@@ -32,7 +34,7 @@ namespace Mercurio.Controllers
             }
         }
 
-        
+        [Authorize]
         [HttpPut]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Update(OverViewUpdateDTO overViewUpdateDTO)

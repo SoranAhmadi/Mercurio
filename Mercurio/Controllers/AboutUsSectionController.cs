@@ -2,6 +2,7 @@ using Application.DTOs.AboutUsSections;
 using Application.DTOs.WhyUses;
 using Application.IServices;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -38,7 +39,7 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }*/
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> InsertOrUpdateAboutUs(AboutUsInsertOrUpdateDTO aboutUsInsertOrUpdateDTO)
         {
@@ -49,7 +50,7 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> InsertOrUpdateOurCompany(OurCompanyInsertOrUpdateDTO ourCompanyInsertOrUpdateDTO)
         {
