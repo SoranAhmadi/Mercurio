@@ -42,6 +42,8 @@ builder.Services.AddTransient<IOverViewService, OverViewService>();
 builder.Services.AddTransient<IAboutUsSectionRepository, AboutUsSectionRepository>();
 builder.Services.AddTransient<IAboutUsSectionService, AboutUsSectionService>();
 
+builder.Services.AddTransient<IContactCommentRepository, ContactCommentRepository>();
+builder.Services.AddTransient<IContactCommentService, ContactCommentService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
