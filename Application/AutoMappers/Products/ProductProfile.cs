@@ -20,7 +20,10 @@ namespace Application.AutoMappers.Products
 
         private void Read()
         {
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>()
+                                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Title));
+
+            ;
         }
         private void Update()
         {
