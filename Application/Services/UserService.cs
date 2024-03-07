@@ -55,15 +55,15 @@ namespace Application.Services
             var userClaims = new[]
             {
                 
-                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
-                new Claim(ClaimTypes.Email, user.UserName),
+                new Claim("FullName", user.FirstName + " " + user.LastName),
+                new Claim("Email", user.UserName),
                 
             };
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: userClaims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);

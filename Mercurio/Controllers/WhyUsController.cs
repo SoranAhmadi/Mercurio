@@ -17,7 +17,7 @@ namespace Mercurio.Controllers
             _whyUsService = whyUsService;
         }
 
-        
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<WhyUsDTO>> GetAll() => await _whyUsService.GetAll();
 
