@@ -15,6 +15,8 @@ namespace Application.AutoMappers.AboutUsSections
             AboutUsOnly();
             AboutUsOnly();
             OurCompany();
+            InsertAboutUs();
+            InsertOurCompany();
         }
 
         private void Create()
@@ -31,16 +33,24 @@ namespace Application.AutoMappers.AboutUsSections
         }
         private void AboutUsDetail()
         {
-            CreateMap<AboutUsSection, AboutUsDetailDTO>();
+            CreateMap<AboutUsSection, AboutUsDetailDTO>().ReverseMap();
             
         }
         private void AboutUsOnly()
         {
-            CreateMap<AboutUsSection, OurCompanyDTO>();
+            CreateMap<AboutUsSection, OurCompanyDTO>().ReverseMap();
         }
         private void OurCompany()
         {
             CreateMap<AboutUsSection, AboutUsOnlyDTO>();
+        }
+        private void InsertAboutUs()
+        {
+            CreateMap<AboutUsSection, AboutUsInsertOrUpdateDTO>().ReverseMap();
+        }
+        private void InsertOurCompany()
+        {
+            CreateMap<AboutUsSection, OurCompanyInsertOrUpdateDTO>().ReverseMap();
         }
     }
    

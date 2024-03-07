@@ -55,6 +55,15 @@ namespace Application.Services
         }
         public async Task Delete(AboutUsSectionDeleteDTO aboutUsSectionDelete)
        => await _aboutUsSectionRepository.DeleteById(aboutUsSectionDelete.Id);
-
+        public async Task InsertOrUpdateAboutUs(AboutUsInsertOrUpdateDTO aboutUs)
+        {
+            var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
+           await _aboutUsSectionRepository.InsertOrUpdateAboutUs(aboutSection);
+        }
+        public async Task InsertOrUpdateOurCompany(OurCompanyInsertOrUpdateDTO aboutUs)
+        {
+            var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
+            await _aboutUsSectionRepository.InsertOrUpdateOurCompany(aboutSection);
+        }
     }
 }

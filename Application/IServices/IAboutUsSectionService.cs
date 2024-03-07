@@ -11,6 +11,8 @@ namespace Application.IServices
         Task<AboutUsSectionUpdateDTO> GetById(int id);
         Task Update(AboutUsSectionUpdateDTO category);
         Task Delete(AboutUsSectionDeleteDTO category);
+        Task InsertOrUpdateAboutUs(AboutUsInsertOrUpdateDTO aboutUs);
+        Task InsertOrUpdateOurCompany(OurCompanyInsertOrUpdateDTO aboutUs);
 
     }
 }
