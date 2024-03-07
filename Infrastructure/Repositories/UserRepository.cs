@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
         {
             var exist = await context.Set<User>().AnyAsync(u => u.UserName == user.UserName.Trim());
             if (exist)
-                throw new NotImplementedException("The Username exist");
+                throw new Exception("The Username exist");
 
            return await base.Insert(user);
         }
@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
         {
             var user = await context.Set<User>().FirstOrDefaultAsync(u => u.UserName == userName && u.Password == password);
             if (user is null)
-                throw new NotImplementedException("The Username or Passord is incorrect");
+                throw new Exception("The Username or Passord is incorrect");
             return user;
         }
         public async Task<User> GetByUserName(string userName)

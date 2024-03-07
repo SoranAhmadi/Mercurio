@@ -2,6 +2,7 @@ using Application.DTOs.Category;
 using Application.DTOs.ContactUs;
 using Application.DTOs.Service;
 using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -19,6 +20,7 @@ namespace Mercurio.Controllers
         [HttpGet]
         public async Task<ContactUsDTO> Get() => await _contactUsService.Get();
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ContactUsCreateDTO contactUsCreateDTO)
         {

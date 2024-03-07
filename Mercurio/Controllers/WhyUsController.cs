@@ -2,6 +2,7 @@ using Application.DTOs.Category;
 using Application.DTOs.ContactComment;
 using Application.DTOs.WhyUses;
 using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
@@ -16,9 +17,11 @@ namespace Mercurio.Controllers
             _whyUsService = whyUsService;
         }
 
+        
         [HttpGet]
         public async Task<IEnumerable<WhyUsDTO>> GetAll() => await _whyUsService.GetAll();
 
+        
         [HttpPost]
         public async Task<WhyUsUpdateDTO> GetById(WhyUsByIdDTO whyUsByIdDTO) => await _whyUsService.GetById(whyUsByIdDTO);
 

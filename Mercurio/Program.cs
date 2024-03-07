@@ -4,7 +4,10 @@ using Domain.Interfaces;
 using FluentValidation;
 using Infrastructure.DbContexts;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +48,9 @@ builder.Services.AddTransient<IAboutUsSectionService, AboutUsSectionService>();
 builder.Services.AddTransient<IContactCommentRepository, ContactCommentRepository>();
 builder.Services.AddTransient<IContactCommentService, ContactCommentService>();
 
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -52,6 +58,24 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 
+// JWT 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
+});
 
 var app = builder.Build();
 
