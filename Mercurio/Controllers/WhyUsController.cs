@@ -44,6 +44,7 @@ namespace Mercurio.Controllers
             if (ModelState.IsValid)
             {
                 await _whyUsService.Update(whyUsUpdateDTO);
+                return Ok();
             }
             return BadRequest(ModelState);
         }

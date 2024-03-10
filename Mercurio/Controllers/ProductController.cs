@@ -31,7 +31,7 @@ namespace Mercurio.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        
         [HttpPost]
         public async Task<ProductUpdateDTO> GetById(ProductDeleteDTO filter) => await _productRepository.GetById(filter.Id);
 
@@ -64,7 +64,8 @@ namespace Mercurio.Controllers
         }
         [Authorize]
         [HttpDelete]
-        public async Task Delete(ProductDeleteDTO productDeleteDTO) => await _productRepository.Delete(productDeleteDTO);
+        [Route("{id}")]
+        public async Task Delete(int id) => await _productRepository.Delete(new ProductDeleteDTO() { Id=id});
 
         [HttpPost]
         public IActionResult Test()

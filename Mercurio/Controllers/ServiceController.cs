@@ -43,16 +43,17 @@ namespace Mercurio.Controllers
 
         [Authorize]
         [HttpDelete]
-        public async Task Delete(ServiceDeleteDTO serviceDeleteDTO) => await _serviceService.Delete(serviceDeleteDTO);
+        [Route("{id}")]
+        public async Task Delete(int id ) => await _serviceService.Delete(new ServiceDeleteDTO() {Id = id });
         
         [Authorize]
         [HttpPut]
         [RequestSizeLimit(500_000)]
-        public async Task<IActionResult> Update(ServiceDeleteDTO serviceDeleteDTO)
+        public async Task<IActionResult> Update(ServiceUpdateDTO serviceDeleteDTO)
         {
             if (ModelState.IsValid)
             {
-                await _serviceService.Delete(serviceDeleteDTO);
+                await _serviceService.Update(serviceDeleteDTO);
                 return Ok();
             }
             else

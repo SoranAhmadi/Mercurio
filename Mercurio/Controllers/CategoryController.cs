@@ -32,7 +32,8 @@ namespace Mercurio.Controllers
         public async Task Update(CategoryUpdateDTO categoryUpdateDTO) => await _categoryRepository.Update(categoryUpdateDTO);
         [Authorize]
         [HttpDelete]
-        public async Task Delete(CategoryDeleteDTO categoryDeleteDTO) => await _categoryRepository.Delete(categoryDeleteDTO);
+        [Route("{id}")]
+        public async Task Delete([FromRoute] int id) => await _categoryRepository.Delete(new CategoryDeleteDTO() { Id=id});
 
     }
 }

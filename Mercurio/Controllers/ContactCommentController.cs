@@ -21,7 +21,7 @@ namespace Mercurio.Controllers
         [Authorize]
         [HttpPost]
         public async Task<ContactCommentUpdateDTO> GetById(CategoryDeleteDTO categoryDeleteDTO) => await _contactCommentService.GetById(categoryDeleteDTO.Id);
-        [Authorize]
+        
         [HttpPost]
         public async Task<IActionResult> Create(ContactCommentCreateDTO contactCommentCreateDTO)
         {
