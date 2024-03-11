@@ -51,6 +51,10 @@ builder.Services.AddTransient<IContactCommentService, ContactCommentService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+builder.Services.AddTransient<IHistoryRepository, HistoryRepository>();
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
