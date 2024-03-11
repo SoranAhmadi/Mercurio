@@ -23,6 +23,22 @@ namespace Mercurio.Controllers
         public async Task<IEnumerable<ServiceSummaryDTO>> GetAllSummary() => await _serviceService.GetAllSummary();
 
         [Authorize]
+        [HttpPut]
+        [RequestSizeLimit(500_000)]
+        public async Task<IActionResult> UpdateSummary(ServiceUpdateSummaryDTO summaryDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                await _serviceService.UpdateSummary(summaryDTO);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         [RequestSizeLimit(500_000)]
         public async Task<IActionResult> Create(ServiceCreateDTO serviceCreateDTO)
