@@ -66,5 +66,11 @@ namespace Application.Services
 
             await _serviceRepsitory.AddServiceItems(serviceItems);
         }
+
+        public async Task UpdateSummary(ServiceUpdateSummaryDTO summary)
+        {
+            var service = _mapper.Map<ServiceUpdateSummaryDTO, Service>(summary);
+           await _serviceRepsitory.UpdateSummary(service);
+        }
     }
 }
