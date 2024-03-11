@@ -11,6 +11,7 @@ namespace Domain.Interfaces
         Task<Service> GetById(int id);
         Task DeleteServiceItems(int serviceId);
         Task AddServiceItems(List<ServiceItem> serviceItems);
+        Task UpdateSummary(Service service);
 
 
     }

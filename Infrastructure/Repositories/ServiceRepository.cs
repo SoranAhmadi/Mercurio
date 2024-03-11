@@ -52,5 +52,17 @@ namespace Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task UpdateSummary(Service service)
+        {
+            var oldService = await context.Set<Service>().FirstOrDefaultAsync(s=>s.Id == service.Id);
+            oldService.Title = service.Title; 
+            oldService.Description = service.Description;
+            if (!string.IsNullOrEmpty(service.ImageBase64))
+            {
+                oldService.ImageBase64 = service.ImageBase64;
+            }
+            await context.SaveChangesAsync();
+        }
+
     }
 }

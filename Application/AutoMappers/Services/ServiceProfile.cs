@@ -11,6 +11,7 @@ namespace Application.AutoMappers.Services
             Read();
             Update();
             ReadSumamry();
+            UpdateSumamry();
         }
         private void Read()
         {
@@ -31,6 +32,12 @@ namespace Application.AutoMappers.Services
         {
             CreateMap<Service, ServiceSummaryDTO>();
             
+        }
+
+        private void UpdateSumamry()
+        {
+            CreateMap<Service, ServiceUpdateSummaryDTO>().ReverseMap();
+
         }
 
     }
