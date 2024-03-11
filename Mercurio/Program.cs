@@ -52,6 +52,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
 builder.Services.AddTransient<IHistoryRepository, HistoryRepository>();
+builder.Services.AddTransient<IHistoryService, HistoryService>();
 
 
 

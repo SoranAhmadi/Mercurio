@@ -58,7 +58,8 @@ namespace Application.Services
                 
                 new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
-                
+                new Claim("Id", user.Id.ToString()),
+
             };
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],

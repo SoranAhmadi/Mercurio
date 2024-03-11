@@ -63,6 +63,16 @@ namespace Infrastructure.Repositories
             }
             await context.SaveChangesAsync();
         }
+       public async new Task Update(Service entity)
+        {
+            var old = await context.Set<Service>().AsNoTracking().FirstOrDefaultAsync(s => s.Id == entity.Id);
+            entity.Description = old.Description;
+            if (string.IsNullOrEmpty(entity.ImageBase64))
+            {
+                entity.ImageBase64 = old.ImageBase64;
+            }
+            await base.Update(entity);
+        }
 
     }
 }

@@ -58,11 +58,13 @@ namespace Application.Services
         public async Task InsertOrUpdateAboutUs(AboutUsInsertOrUpdateDTO aboutUs)
         {
             var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
+            aboutSection.Type = AboutUsType.AboutUs;
            await _aboutUsSectionRepository.InsertOrUpdateAboutUs(aboutSection);
         }
         public async Task InsertOrUpdateOurCompany(OurCompanyInsertOrUpdateDTO aboutUs)
         {
             var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
+            aboutSection.Type = AboutUsType.OurCompany;
             await _aboutUsSectionRepository.InsertOrUpdateOurCompany(aboutSection);
         }
     }

@@ -27,6 +27,8 @@ namespace Application.AutoMappers.Services
                     Title = s.Title,
                     Id  = s.Id,
                 }).ToList())); ;
+
+            CreateMap<ServiceUpdateDTO, Service>();
         }
         private void ReadSumamry()
         {

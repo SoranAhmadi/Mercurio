@@ -61,7 +61,7 @@ namespace Application.Services
             var serviceItems = serviceUpdateDTO.ServiceUpdateItems.Select(s => new ServiceItem()
             {
                 ServiceId = serviceUpdateDTO.Id,
-                Title = s.Title
+                Title = s
             }).ToList();
 
             await _serviceRepsitory.AddServiceItems(serviceItems);

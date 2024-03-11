@@ -48,10 +48,12 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-        
+
         [Authorize]
         [HttpDelete]
-        public async Task Delete(WhyUsDeleteDTO whyUsDeleteDTO) => await _whyUsService.Delete(whyUsDeleteDTO);
+        [Route("{id}")]
+
+        public async Task Delete(int id) => await _whyUsService.Delete(new WhyUsDeleteDTO() { Id = id });
 
 
     }

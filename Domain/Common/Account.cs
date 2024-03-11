@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Domain.Common
@@ -8,7 +10,7 @@ namespace Domain.Common
         const int keySize = 64;
         const int iterations = 350000;
         HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
-       public string HashPasword(string password, out byte[] salt)
+        public string HashPasword(string password, out byte[] salt)
         {
             salt = RandomNumberGenerator.GetBytes(keySize);
 
@@ -22,11 +24,16 @@ namespace Domain.Common
             return Convert.ToHexString(hash);
         }
 
-       public bool VerifyPassword(string password, string hash, byte[] salt)
+        public bool VerifyPassword(string password, string hash, byte[] salt)
         {
             var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
 
             return CryptographicOperations.FixedTimeEquals(hashToCompare, Convert.FromHexString(hash));
+        }
+        public int GetUserId( IHttpContextAccessor httpContextAccessor)
+        {
+            string result = httpContextAccessor.HttpContext.User.FindFirst("Id").Value;
+            return Convert.ToInt32(result);
         }
     }
 }

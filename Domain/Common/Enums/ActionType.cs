@@ -1,6 +1,9 @@
 ﻿namespace Domain.Common.Enums
 {
-    internal class ActionType
+    public enum ActionType:short
     {
+        Create = 1,
+        Update = 2,
+        Delete = 3,
     }
 }

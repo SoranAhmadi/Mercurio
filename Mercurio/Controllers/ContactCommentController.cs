@@ -42,9 +42,11 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
+        
         [Authorize]
         [HttpDelete]
-        public async Task Delete(ContactCommentDeleteDTO contactCommentDeleteDTO) => await _contactCommentService.Delete(contactCommentDeleteDTO);
+        [Route("{id}")]
+        public async Task Delete(int id) => await _contactCommentService.Delete(new ContactCommentDeleteDTO() {Id = id });
 
 
     }
