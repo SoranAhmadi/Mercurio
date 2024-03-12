@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mercurio.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HistoryController(IHistoryService historyService) : ControllerBase
     {

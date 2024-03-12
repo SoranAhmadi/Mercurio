@@ -2,12 +2,11 @@
 
 namespace Application.DTOs.Histories
 {
-    public class HistoryDTO
+    public class HistoryCreateDTO
     {
         public required string Entity { get; set; } 
-        public string Action { get; set; } 
+        public ActionType Action { get; set; } 
         public DateTime CreatedDate { get; set; } 
-        public string FullName { get; set; }
-        public int RecordId { get; set; }
+        public int UserId { get; set; }
     }
 }

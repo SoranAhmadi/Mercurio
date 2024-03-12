@@ -1,10 +1,12 @@
 using Application.IServices;
 using Application.Services;
+using Domain.Entities;
 using Domain.Interfaces;
 using FluentValidation;
 using Infrastructure.DbContexts;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -58,7 +60,8 @@ builder.Services.AddTransient<IHistoryService, HistoryService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
@@ -114,6 +117,7 @@ app.UseCors(x => x
     .AllowAnyHeader());
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
