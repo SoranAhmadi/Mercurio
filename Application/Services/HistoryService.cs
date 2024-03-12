@@ -1,6 +1,9 @@
-﻿using Application.IServices;
+﻿using Application.DTOs.Histories;
+using Application.IServices;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -12,6 +15,11 @@ namespace Application.Services
         {
             _historyRepsitory = historyRepsitory;
             _mapper = mapper;
+        }
+        public async Task<IEnumerable<HistoryDTO>> GetAll()
+        {
+           var histories = await _historyRepsitory.GetAllQueryAble().ProjectTo<HistoryDTO>(_mapper.ConfigurationProvider).ToListAsync();
+           return histories;
         }
     }
 }
