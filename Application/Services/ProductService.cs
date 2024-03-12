@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
@@ -13,10 +14,15 @@ namespace Application.Services
     {
         private readonly IProductRepository _productRepsitory;
         private readonly IMapper _mapper;
-        public ProductService(IProductRepository productRepsitory, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHistoryRepository _historyRepository;
+        public ProductService(IProductRepository productRepsitory, IMapper mapper,
+            IHistoryRepository historyRepository, IHttpContextAccessor httpContextAccessor)
         {
             _productRepsitory = productRepsitory;
             _mapper = mapper;
+            _historyRepository = historyRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAll(ProductFilterDTO? filter)

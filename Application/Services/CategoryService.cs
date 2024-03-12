@@ -45,9 +45,20 @@ namespace Application.Services
             return _mapper.Map<CategoryUpdateDTO>(category);
         }
         public async Task Update(CategoryUpdateDTO category)
-        => await _categoryRepsitory.Update(_mapper.Map<Category>(category));
+        {
+             await _categoryRepsitory.Update(_mapper.Map<Category>(category));
+
+            var newHistory = new History(nameof(Category), ActionType.Update, _httpContextAccessor.GetUserId(), category.Id);
+            await _historyRepository.Insert(newHistory);
+        }
 
         public async Task Delete(CategoryDeleteDTO category)
-        => await _categoryRepsitory.DeleteById(category.Id);
+        {
+            await _categoryRepsitory.DeleteById(category.Id);
+
+            var newHistory = new History(nameof(Category), ActionType.Delete, _httpContextAccessor.GetUserId(), category.Id);
+            await _historyRepository.Insert(newHistory);
+        }
+        
     }
 }
