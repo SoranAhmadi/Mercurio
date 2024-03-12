@@ -1,7 +1,5 @@
 using Application.DTOs.AboutUsSections;
-using Application.DTOs.WhyUses;
 using Application.IServices;
-using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,26 +17,10 @@ namespace Mercurio.Controllers
 
         [HttpGet]
         public async Task<AboutUsOnlyDTO> GetAboutUs() => await _aboutUsSectionService.GetAboutUs();
-        /*[HttpGet]
-        public async Task<IEnumerable< AboutUsDetailDTO>> GetAllWithDetail() => await _aboutUsSectionService.GetAllWithDetail();
-        */
+
         [HttpGet]
         public async Task<OurCompanyDTO> GetOurCompany() => await _aboutUsSectionService.GetOurCompany();
 
-
-        /*[HttpPost]
-        public async Task<AboutUsSectionUpdateDTO> GetById(AboutUsSectionByIdDTO aboutUsSectionByIdDTO) => await _aboutUsSectionService.GetById(aboutUsSectionByIdDTO.Id);
-*/
-        /*[HttpPost]
-        public async Task<IActionResult> Create(AboutUsSectionCreateDTO aboutUsSectionCreateDTO)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _aboutUsSectionService.Create(aboutUsSectionCreateDTO);
-                return Ok(result);
-            }
-            return BadRequest(ModelState);
-        }*/
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> InsertOrUpdateAboutUs(AboutUsInsertOrUpdateDTO aboutUsInsertOrUpdateDTO)
