@@ -20,6 +20,11 @@ namespace Mercurio.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public async Task<IEnumerable<UserDTO>> GetAll()=>await _userService.GetAll();
+        
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(UserCreateDTO userCreateDTO)
         {
@@ -30,7 +35,6 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Authenticate(AuthenticateDTO authenticateDTO)

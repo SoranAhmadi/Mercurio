@@ -14,6 +14,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Application.DTOs.Category;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -28,6 +31,9 @@ namespace Application.Services
             _mapper = mapper;
             _config = config;
         }
+        public async Task<IEnumerable<UserDTO>> GetAll()
+    => await _userRepository.GetAllQueryAble().ProjectTo<UserDTO>(_mapper.ConfigurationProvider).ToListAsync();
+
         public async Task Create(UserCreateDTO userCreate)
         {
 
@@ -54,6 +60,7 @@ namespace Application.Services
             else return GenerateToken(user);
         }
 
+
         private string GenerateToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
@@ -64,8 +71,8 @@ namespace Application.Services
                 new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Image", user.Image),
-                new Claim("Type", Enum.GetName(user.UserType)),
+                new Claim("Image",string.IsNullOrEmpty(user.Image)? "NotFound.jpg":user.Image ),
+                new Claim("Type", Enum.GetName(user.UserType).ToString()),
 
             };
             var token = new JwtSecurityToken(
