@@ -7,6 +7,6 @@ namespace Application.IServices
         Task<IEnumerable<UserDTO>> GetAll();
         Task Create(UserCreateDTO userCreate);
         Task<string> Autonticate(AuthenticateDTO authenticateDTO);
-        /*Task Delete(int id);*/
+        Task Delete(int id);
     }
 }

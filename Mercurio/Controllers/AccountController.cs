@@ -1,5 +1,6 @@
 using Application.DTOs.Category;
 using Application.DTOs.ContactComment;
+using Application.DTOs.Product;
 using Application.DTOs.Users;
 using Application.IServices;
 using Application.Services;
@@ -44,5 +45,12 @@ namespace Mercurio.Controllers
                 return BadRequest("The username or Password is incorrect");
             return Ok(result);
         }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task Delete(int id) => await _userService.Delete(id);
+
+
     }
 }

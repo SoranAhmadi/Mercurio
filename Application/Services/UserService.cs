@@ -60,6 +60,11 @@ namespace Application.Services
             else return GenerateToken(user);
         }
 
+        public async Task Delete(int id)
+        {
+             await _userRepository.DeleteById(id);
+        }
+
 
         private string GenerateToken(User user)
         {
