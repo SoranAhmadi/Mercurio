@@ -17,7 +17,10 @@ namespace Application.AutoMappers.Histories
         {
             CreateMap<History, HistoryDTO>()
                               .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => string.Format("{0} {1}", src.User.FirstName, src.User.LastName)))
-                               .ForMember(dest => dest.Action, opt => opt.MapFrom(src => Enum.GetName(src.Action)));
+                               .ForMember(dest => dest.Action, opt => opt.MapFrom(src => Enum.GetName(src.Action)))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src=>src.CreatedDate.ToString("yyyy-MM-dd")))
+            .ForMember(dest => dest.Hour, opt => opt.MapFrom(src => src.CreatedDate.ToString("hh-ss")))
+            ;
 
             ;
         }
