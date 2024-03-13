@@ -1,4 +1,5 @@
 ﻿using Domain.Common.Enums;
+using System.Globalization;
 
 namespace Domain.Entities
 {
@@ -10,5 +11,6 @@ namespace Domain.Entities
         public required string Password { get; set; }
         public required byte[] Salt { get; set; }
         public UserType UserType { get; set; }
+        public string? Image { get; set; }
     }
 }

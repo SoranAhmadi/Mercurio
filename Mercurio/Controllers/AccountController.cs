@@ -30,6 +30,8 @@ namespace Mercurio.Controllers
             }
             return BadRequest(ModelState);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Authenticate(AuthenticateDTO authenticateDTO)
         {

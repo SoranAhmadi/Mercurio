@@ -7,9 +7,13 @@ using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.Services
 {
@@ -31,6 +35,7 @@ namespace Application.Services
             Account account = new Account();
             user.Password = account.HashPasword(user.Password, out var salt);
             user.Salt = salt;
+            user.Image = SaveImage(userCreate.ImageBase64);
             await _userRepository.Insert(user);
         }
         public async Task<string> Autonticate(AuthenticateDTO authenticateDTO)
@@ -59,6 +64,8 @@ namespace Application.Services
                 new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
                 new Claim("Id", user.Id.ToString()),
+                new Claim("Image", user.Image),
+                new Claim("Type", Enum.GetName(user.UserType)),
 
             };
             var token = new JwtSecurityToken(
@@ -69,6 +76,16 @@ namespace Application.Services
                 signingCredentials: credentials
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string SaveImage(string imageBase64)
+        {
+            var strGuid = Guid.NewGuid().ToString();
+            var base64array = Convert.FromBase64String(imageBase64.Substring(imageBase64.LastIndexOf(',') + 1));
+            var filePath = Path.Combine($"wwwroot/img/user/{strGuid}.jpg");
+            System.IO.File.WriteAllBytes(filePath, base64array);
+            return strGuid;
+
         }
 
 
