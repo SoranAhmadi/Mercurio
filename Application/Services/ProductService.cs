@@ -3,11 +3,12 @@ using Application.DTOs.Product;
 using Application.IServices;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-
+using Domain.Common;
 namespace Application.Services
 {
     public class ProductService : IProductService
@@ -52,7 +53,10 @@ namespace Application.Services
         public async Task<int> Create(ProductCreateDTO product)
         {
             var newProduct = _mapper.Map<ProductCreateDTO, Product>(product);
-            return await _productRepsitory.Insert(newProduct);
+            var result = await _productRepsitory.Insert(newProduct);
+            var newHistory = new History(nameof(Product), ActionType.Create, _httpContextAccessor.GetUserId(), result);
+            await _historyRepository.Insert(newHistory);
+            return result;
 
         }
         public async Task<ProductUpdateDTO> GetById(int id)
@@ -65,9 +69,17 @@ namespace Application.Services
         {
             var newProduct = _mapper.Map<ProductUpdateDTO, Product>(product);
             await _productRepsitory.Update(newProduct);
+            var newHistory = new History(nameof(Product), ActionType.Update, _httpContextAccessor.GetUserId(), product.Id);
+            await _historyRepository.Insert(newHistory);
+
         }
-        public async Task Delete(ProductDeleteDTO category)
-        => await _productRepsitory.DeleteById(category.Id);
+        public async Task Delete(ProductDeleteDTO product)
+        {
+            await _productRepsitory.DeleteById(product.Id);
+            var newHistory = new History(nameof(Product), ActionType.Delete, _httpContextAccessor.GetUserId(), product.Id);
+            await _historyRepository.Insert(newHistory);
+
+        }
 
     }
 }

@@ -6,7 +6,9 @@ using AutoMapper.QueryableExtensions;
 using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Domain.Common;
 
 namespace Application.Services
 {
@@ -14,11 +16,16 @@ namespace Application.Services
     {
         private readonly IAboutUsSectionRepository _aboutUsSectionRepository;
         private readonly IMapper _mapper;
+        private readonly IHistoryRepository _historyRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AboutUsSectionService(IMapper mapper, IAboutUsSectionRepository aboutUsSectionRepository)
+        public AboutUsSectionService(IMapper mapper, IAboutUsSectionRepository aboutUsSectionRepository, IHistoryRepository historyRepository,
+            IHttpContextAccessor httpContextAccessor)
         {
             _aboutUsSectionRepository = aboutUsSectionRepository;
             _mapper = mapper;
+            _historyRepository = historyRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<OurCompanyDTO> GetOurCompany()
         {
@@ -60,12 +67,20 @@ namespace Application.Services
             var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
             aboutSection.Type = AboutUsType.AboutUs;
            await _aboutUsSectionRepository.InsertOrUpdateAboutUs(aboutSection);
+
+            var newHistory = new History(nameof(AboutUsSection), ActionType.Update, _httpContextAccessor.GetUserId(), 1);
+            await _historyRepository.Insert(newHistory);
+
+
         }
         public async Task InsertOrUpdateOurCompany(OurCompanyInsertOrUpdateDTO aboutUs)
         {
             var aboutSection = _mapper.Map<AboutUsSection>(aboutUs);
             aboutSection.Type = AboutUsType.OurCompany;
             await _aboutUsSectionRepository.InsertOrUpdateOurCompany(aboutSection);
+            var newHistory = new History(nameof(AboutUsSection), ActionType.Update, _httpContextAccessor.GetUserId(), 1);
+            await _historyRepository.Insert(newHistory);
+
         }
     }
 }

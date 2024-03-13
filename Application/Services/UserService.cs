@@ -17,6 +17,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Application.DTOs.Category;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Application.DTOs.WhyUses;
+using Domain.Common.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Services
 {
@@ -25,11 +28,16 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration config)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHistoryRepository _historyRepository;
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration config,
+            IHttpContextAccessor httpContextAccessor, IHistoryRepository historyRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _config = config;
+            _httpContextAccessor = httpContextAccessor;
+            _historyRepository = historyRepository;
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
     => await _userRepository.GetAllQueryAble().ProjectTo<UserDTO>(_mapper.ConfigurationProvider).ToListAsync();
@@ -42,7 +50,10 @@ namespace Application.Services
             user.Password = account.HashPasword(user.Password, out var salt);
             user.Salt = salt;
             user.Image = SaveImage(userCreate.ImageBase64);
-            await _userRepository.Insert(user);
+            var result = await _userRepository.Insert(user);
+            var newHistory = new History(nameof(User), ActionType.Create, _httpContextAccessor.GetUserId(), result);
+            await _historyRepository.Insert(newHistory);
+
         }
         public async Task<string> Autonticate(AuthenticateDTO authenticateDTO)
         {
@@ -62,7 +73,10 @@ namespace Application.Services
 
         public async Task Delete(int id)
         {
-             await _userRepository.DeleteById(id);
+            await _userRepository.DeleteById(id);
+            var newHistory = new History(nameof(User), ActionType.Delete, _httpContextAccessor.GetUserId(), id);
+            await _historyRepository.Insert(newHistory);
+
         }
 
 
@@ -72,7 +86,7 @@ namespace Application.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var userClaims = new[]
             {
-                
+
                 new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
                 new Claim("Id", user.Id.ToString()),

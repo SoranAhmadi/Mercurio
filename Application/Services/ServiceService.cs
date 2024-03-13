@@ -2,9 +2,14 @@
 using Application.IServices;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Domain.Common;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 namespace Application.Services
 {
 
@@ -12,10 +17,14 @@ namespace Application.Services
     {
         private readonly IServiceRepository _serviceRepsitory;
         private readonly IMapper _mapper;
-        public ServiceService(IServiceRepository serviceRepsitory, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHistoryRepository _historyRepository;
+        public ServiceService(IServiceRepository serviceRepsitory, IMapper mapper, IHttpContextAccessor httpContextAccessor, IHistoryRepository historyRepository)
         {
             _serviceRepsitory = serviceRepsitory;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+            _historyRepository = historyRepository;
         }
 
         public async Task<IEnumerable<ServiceDTO>> GetAll()
@@ -39,11 +48,19 @@ namespace Application.Services
                 ServiceItems = serviceCreateDTO.ServiceItems.Select(s => new ServiceItem() { Title = s }).ToList()
             };
             var resut = await _serviceRepsitory.Insert(newService);
+
+            var newHistory = new History(nameof(Service), ActionType.Create, _httpContextAccessor.GetUserId(), resut);
+            await _historyRepository.Insert(newHistory);
+
             return resut;
         }
 
         public async Task Delete(ServiceDeleteDTO delete)
-            => await _serviceRepsitory.Delete(delete.Id);
+        {
+            await _serviceRepsitory.Delete(delete.Id);
+            var newHistory = new History(nameof(Service), ActionType.Delete, _httpContextAccessor.GetUserId(), delete.Id);
+            await _historyRepository.Insert(newHistory);
+        }
 
         public async Task<ServiceUpdateDTO> GetById(int id)
         {
@@ -65,12 +82,17 @@ namespace Application.Services
             }).ToList();
 
             await _serviceRepsitory.AddServiceItems(serviceItems);
+            var newHistory = new History(nameof(Service), ActionType.Update, _httpContextAccessor.GetUserId(), serviceUpdateDTO.Id);
+            await _historyRepository.Insert(newHistory);
         }
 
         public async Task UpdateSummary(ServiceUpdateSummaryDTO summary)
         {
             var service = _mapper.Map<ServiceUpdateSummaryDTO, Service>(summary);
-           await _serviceRepsitory.UpdateSummary(service);
+            await _serviceRepsitory.UpdateSummary(service);
+
+            var newHistory = new History(nameof(Service), ActionType.Update, _httpContextAccessor.GetUserId(), summary.Id);
+            await _historyRepository.Insert(newHistory);
         }
     }
 }
