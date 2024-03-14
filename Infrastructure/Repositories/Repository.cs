@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
 
         public async Task<T?> Get(int id)
         {
-            return await entities.SingleOrDefaultAsync(s => s.Id == id);
+            return await entities.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
         }
         public async Task<int> Insert(T entity)
         {
@@ -61,8 +61,9 @@ namespace Infrastructure.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Remove(entity);
-            await context.SaveChangesAsync();
+            entity.IsDeleted = true;
+            await Update(entity);
+          
         }
         public async Task RemoveRange(IEnumerable<T> list)
         {
