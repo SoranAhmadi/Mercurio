@@ -1,14 +1,14 @@
 ﻿using Application.DTOs.Service;
+using Application.DTOs.Users;
 using Application.IServices;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Common;
 using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Domain.Common;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Application.Services
 {
@@ -94,5 +94,7 @@ namespace Application.Services
             var newHistory = new History(nameof(Service), ActionType.Update, _httpContextAccessor.GetUserId(), summary.Id);
             await _historyRepository.Insert(newHistory);
         }
+
+        
     }
 }

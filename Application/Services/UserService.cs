@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.DTOs.WhyUses;
 using Domain.Common.Enums;
 using Microsoft.AspNetCore.Http;
+using System.Security.Principal;
 
 namespace Application.Services
 {
@@ -112,6 +113,14 @@ namespace Application.Services
             System.IO.File.WriteAllBytes(filePath, base64array);
             return strGuid + ".jpg";
 
+        }
+        public async Task UpdatePassword(ForgetPasswordDTO forgetPasswordDTO)
+        {
+            var currentUser = await _userRepository.GetByUserName(forgetPasswordDTO.UserName);
+            Account account = new Account();
+            currentUser.Password = account.HashPasword(forgetPasswordDTO.Password, out var salt);
+            currentUser.Salt = salt;
+            await _userRepository.Update(currentUser);
         }
 
 

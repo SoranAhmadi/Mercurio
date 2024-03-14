@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Product;
 using Application.DTOs.Service;
+using Application.DTOs.Users;
 using Domain.Entities;
 
 namespace Application.IServices
@@ -14,5 +15,6 @@ namespace Application.IServices
         Task Update(ServiceUpdateDTO serviceUpdateDTO);
         Task UpdateSummary(ServiceUpdateSummaryDTO summary);
 
+        
     }
 }

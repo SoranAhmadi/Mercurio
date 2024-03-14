@@ -51,6 +51,14 @@ namespace Mercurio.Controllers
         [Route("{id}")]
         public async Task Delete(int id) => await _userService.Delete(id);
 
+        [Authorize]
+        [HttpPatch]
+        public async Task<IActionResult> ChangePasswordAdmin(ForgetPasswordDTO forgetPasswordDTO)
+        {
+             await _userService.UpdatePassword(forgetPasswordDTO);
+            return Ok();
+        }
+
 
     }
 }

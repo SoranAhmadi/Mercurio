@@ -8,5 +8,7 @@ namespace Application.IServices
         Task Create(UserCreateDTO userCreate);
         Task<string> Autonticate(AuthenticateDTO authenticateDTO);
         Task Delete(int id);
+        Task UpdatePassword(ForgetPasswordDTO forgetPasswordDTO);
+
     }
 }
