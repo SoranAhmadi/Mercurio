@@ -9,7 +9,7 @@ namespace Domain.Common
             string result = httpContextAccessor.HttpContext.User.FindFirst("Id").Value;
             return Convert.ToInt32(result);
         }
-        public static string GetUserUserName(this IHttpContextAccessor httpContextAccessor)
+        public static string GetUserName(this IHttpContextAccessor httpContextAccessor)
         {
             string result = httpContextAccessor.HttpContext.User.FindFirst("Email").Value;
             return result;

@@ -59,6 +59,25 @@ namespace Mercurio.Controllers
             return Ok();
         }
 
+       
+        [HttpPatch]
+        [Route("{gmail}")]
+        public async Task<IActionResult> SendPassByEmail(string gmail)
+        {
+            var result = await _userService.ExistEmail(gmail);
+            if (!result)
+            {
+                return BadRequest("The UserName does not Exist");
+            }
+           var resultSend =  await _userService.SendPassByEmail(gmail);
+            if(resultSend)
+            {
+                return Ok();
+            }
+
+            return BadRequest("We can not send email to your email address");
+        }
+
 
     }
 }

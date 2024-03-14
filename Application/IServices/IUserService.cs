@@ -9,6 +9,8 @@ namespace Application.IServices
         Task<string> Autonticate(AuthenticateDTO authenticateDTO);
         Task Delete(int id);
         Task UpdatePassword(ForgetPasswordDTO forgetPasswordDTO);
-
+        Task<bool> UpdateMyPassword(string password);
+        Task<bool> SendPassByEmail(string gmail);
+        Task<bool> ExistEmail(string email);
     }
 }

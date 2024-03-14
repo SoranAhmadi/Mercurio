@@ -1,3 +1,4 @@
+using Application.DTOs.Users;
 using Application.IServices;
 using Application.Services;
 using Domain.Entities;
@@ -8,6 +9,7 @@ using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -98,6 +100,11 @@ builder.Services.AddCors(options =>
                                                   .AllowAnyMethod();
                       });
 });
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 
 var app = builder.Build();
 

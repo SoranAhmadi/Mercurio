@@ -1,26 +1,19 @@
 ﻿using Application.DTOs.Users;
 using Application.IServices;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Common;
+using Domain.Common.Enums;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Application.DTOs.Category;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using Application.DTOs.WhyUses;
-using Domain.Common.Enums;
-using Microsoft.AspNetCore.Http;
-using System.Security.Principal;
 
 namespace Application.Services
 {
@@ -31,14 +24,16 @@ namespace Application.Services
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHistoryRepository _historyRepository;
+        private readonly IEmailSender _emailSender;
         public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration config,
-            IHttpContextAccessor httpContextAccessor, IHistoryRepository historyRepository)
+            IHttpContextAccessor httpContextAccessor, IHistoryRepository historyRepository, IEmailSender emailSender)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _config = config;
             _httpContextAccessor = httpContextAccessor;
             _historyRepository = historyRepository;
+            _emailSender = emailSender;
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
     => await _userRepository.GetAllQueryAble().ProjectTo<UserDTO>(_mapper.ConfigurationProvider).ToListAsync();
@@ -121,6 +116,35 @@ namespace Application.Services
             currentUser.Password = account.HashPasword(forgetPasswordDTO.Password, out var salt);
             currentUser.Salt = salt;
             await _userRepository.Update(currentUser);
+        }
+
+        public async Task<bool> UpdateMyPassword(string password)
+        {
+            var currentUser = await _userRepository.GetByUserName(_httpContextAccessor.GetUserName());
+            if (_httpContextAccessor.GetUserId() != currentUser.Id)
+                return false;
+            Account account = new Account();
+            currentUser.Password = account.HashPasword(password, out var salt);
+            currentUser.Salt = salt;
+            await _userRepository.Update(currentUser);
+            return true;
+        }
+        public async Task<bool> SendPassByEmail(string gmail)
+        {
+            Random random = new Random();
+            int randomBetween100And500 = random.Next(90000, 100000);
+            var message = new Message(new string[] { gmail }, "Recovery Password", $"Your new password chnaged to:{randomBetween100And500}.", null);
+            var result = await _emailSender.SendEmailAsync(message);
+            if (result)
+            {
+                await UpdatePassword(new() { Password = randomBetween100And500.ToString(), UserName = gmail });
+            }
+            return result;
+
+        }
+        public async Task<bool> ExistEmail(string email)
+        {
+            return await _userRepository.GetByUserName(email) == null ? false : true;
         }
 
 
