@@ -9,6 +9,11 @@ namespace Domain.Common
             string result = httpContextAccessor.HttpContext.User.FindFirst("Id").Value;
             return Convert.ToInt32(result);
         }
+        public static string GetUserUserName(this IHttpContextAccessor httpContextAccessor)
+        {
+            string result = httpContextAccessor.HttpContext.User.FindFirst("Email").Value;
+            return result;
+        }
 
         public static string GetFileExtension(this string base64String)
         {
