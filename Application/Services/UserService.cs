@@ -110,7 +110,7 @@ namespace Application.Services
             var base64array = Convert.FromBase64String(imageBase64.Substring(imageBase64.LastIndexOf(',') + 1));
             var filePath = Path.Combine($"wwwroot/img/user/{strGuid}.jpg");
             System.IO.File.WriteAllBytes(filePath, base64array);
-            return strGuid;
+            return strGuid + ".jpg";
 
         }
 
