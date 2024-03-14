@@ -86,7 +86,7 @@ namespace Application.Services
                 new Claim("FullName",string.Format("{0} {1}",user.FirstName, user.LastName)),
                 new Claim("Email", user.UserName),
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Image",string.IsNullOrEmpty(user.Image)? "NotFound.jpg":user.Image ),
+                new Claim("Image",string.IsNullOrEmpty(user.Image)? "notfound.png":user.Image ),
                 new Claim("Type", Enum.GetName(user.UserType).ToString()),
 
             };
