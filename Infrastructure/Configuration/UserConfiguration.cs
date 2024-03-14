@@ -12,6 +12,7 @@ namespace Infrastructure.Configuration
             builder.Property(s => s.LastName).HasMaxLength(100);
             builder.Property(s => s.UserName).HasMaxLength(50);
             builder.Property(s => s.Password).HasMaxLength(500);
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

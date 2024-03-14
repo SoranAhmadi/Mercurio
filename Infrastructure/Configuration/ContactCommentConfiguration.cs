@@ -11,6 +11,7 @@ namespace Infrastructure.Configuration
             builder.Property(s => s.FullName).HasMaxLength(80);
             builder.Property(s => s.Email).HasMaxLength(80);
             builder.Property(s => s.Message).HasMaxLength(2000);
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
 
     }

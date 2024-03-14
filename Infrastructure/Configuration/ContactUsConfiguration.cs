@@ -14,6 +14,7 @@ namespace Infrastructure.Configuration
             builder.Property(s => s.WhatsApp).HasMaxLength(200);
             builder.Property(s => s.Address).HasMaxLength(1000);
             builder.Property(s => s.Email).HasMaxLength(200);
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

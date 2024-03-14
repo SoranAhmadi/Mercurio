@@ -9,7 +9,7 @@ namespace Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<AboutUsSection> builder)
         {
             builder.Property(s => s.Title).HasMaxLength(500);
-            
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

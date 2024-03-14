@@ -8,6 +8,7 @@ namespace Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<OverView> builder)
         {
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

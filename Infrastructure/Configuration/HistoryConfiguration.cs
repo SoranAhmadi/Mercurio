@@ -9,6 +9,7 @@ namespace Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<History> builder)
         {
             builder.Property(s => s.Entity).HasMaxLength(80);
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 

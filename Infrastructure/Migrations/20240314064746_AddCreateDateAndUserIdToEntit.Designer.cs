@@ -4,6 +4,7 @@ using Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextMericurio))]
-    partial class DbContextMericurioModelSnapshot : ModelSnapshot
+    [Migration("20240314064746_AddCreateDateAndUserIdToEntit")]
+    partial class AddCreateDateAndUserIdToEntit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AboutUsSection", (string)null);
+                    b.ToTable("AboutUsSection");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
@@ -88,7 +91,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.ContactComment", b =>
@@ -125,7 +128,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactComment", (string)null);
+                    b.ToTable("ContactComment");
                 });
 
             modelBuilder.Entity("Domain.Entities.ContactUs", b =>
@@ -180,7 +183,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactUs", (string)null);
+                    b.ToTable("ContactUs");
                 });
 
             modelBuilder.Entity("Domain.Entities.History", b =>
@@ -218,7 +221,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("History", (string)null);
+                    b.ToTable("History");
                 });
 
             modelBuilder.Entity("Domain.Entities.OverView", b =>
@@ -248,7 +251,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OverView", (string)null);
+                    b.ToTable("OverView");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -290,7 +293,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
@@ -349,7 +352,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Service", (string)null);
+                    b.ToTable("Service");
                 });
 
             modelBuilder.Entity("Domain.Entities.ServiceItem", b =>
@@ -381,7 +384,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceItem", (string)null);
+                    b.ToTable("ServiceItem");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -433,7 +436,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.WhyUs", b =>
@@ -468,7 +471,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WhyUs", (string)null);
+                    b.ToTable("WhyUs");
                 });
 
             modelBuilder.Entity("Domain.Entities.History", b =>

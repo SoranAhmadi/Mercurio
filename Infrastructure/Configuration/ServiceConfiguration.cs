@@ -19,6 +19,7 @@ namespace Infrastructure.Configuration
                   .WithOne(p => p.Service)
                   .HasForeignKey(p => p.ServiceId)
                   .HasConstraintName("FK_ServiceItems_Service");
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

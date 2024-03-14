@@ -13,6 +13,8 @@ namespace Infrastructure.Configuration
                       .WithOne(p => p.Category)
                       .HasForeignKey(p => p.CategoryId)
                       .HasConstraintName("FK_Products_Category");
+
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

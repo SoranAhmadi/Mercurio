@@ -9,6 +9,7 @@ namespace Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(s => s.Title).HasMaxLength(200);
+            builder.HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

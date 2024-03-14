@@ -10,6 +10,7 @@ namespace Infrastructure.Configuration
         {
             builder.Property(s => s.Title).HasMaxLength(200);
             builder.Property(s => s.Description).HasMaxLength(2000);
+            builder.HasQueryFilter(s => !s.IsDeleted);
 
         }
     }
